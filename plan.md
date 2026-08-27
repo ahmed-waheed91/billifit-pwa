@@ -103,12 +103,15 @@ watermark, which wasn't visible to him at all on his real device.
     #1E2E3D`) so text still reads as neutral against the new cool palette.
   - `--protein`: soft indigo (`#6C63A6`). `--fat`: teal (`#2F8F86`, same family as before).
     `--usda`: blue (`#1F6FA0`).
-  - `--carbs`: **Pantone Yellow 0131 U (`#FBF59B`, RGB 251/245/155)** — the user's exact requested
-    shade, swapped in after an initial mustard-gold (`#D9A017`) attempt. This is **the "yellow"
-    token** — FAB, active filter chips, and the carbs macro color all read from it. It's pale
-    enough that it only works because those elements use dark `var(--ink)` text/icons on top, never
-    white — check that before ever reusing `--carbs` somewhere new. `--label-tint`/`--note-bg` are
-    a separate, already-pale sub-family (chip/note surfaces) — not tied to this token, left as-is.
+  - `--carbs`: **Pantone 11-0616 TCX "Pastel Yellow" (`#F2E6B1`, RGB 242/230/177)** — the user's
+    exact requested shade, after two rounds of Pantone-matched iteration: started as a mustard-gold
+    (`#D9A017`), then Pantone Yellow 0131 U (`#FBF59B`), now this. This is **the "yellow" token** —
+    FAB, active filter chips, and the carbs macro color all read from it. It's pale enough that it
+    only works because those elements use dark `var(--ink)` text/icons on top, never white — check
+    that before ever reusing `--carbs` somewhere new. `--label-tint`/`--note-bg` are a separate,
+    already-pale sub-family (chip/note surfaces) — not tied to this token, left as-is. **If asked to
+    change this again, look up the exact Pantone hex (WebSearch) rather than eyeballing it** — the
+    user has been specifying exact Pantone codes each time, not approximate color names.
   - Semantic colors (`--good`/`--warning`/`--critical`) left untouched again, per the same
     reasoning as the original fork.
   - A few hardcoded (non-var) leftover colors tied to the *original* Original-App palette —
