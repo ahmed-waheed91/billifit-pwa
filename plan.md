@@ -103,9 +103,12 @@ watermark, which wasn't visible to him at all on his real device.
     #1E2E3D`) so text still reads as neutral against the new cool palette.
   - `--protein`: soft indigo (`#6C63A6`). `--fat`: teal (`#2F8F86`, same family as before).
     `--usda`: blue (`#1F6FA0`).
-  - `--carbs`: golden mustard (`#D9A017`) — **this is the "yellow" token**, also reused for
-    `--label-tint`/`--note-bg` chip/note surfaces so yellow shows up as a real base color, not
-    just a rare accent.
+  - `--carbs`: **Pantone Yellow 0131 U (`#FBF59B`, RGB 251/245/155)** — the user's exact requested
+    shade, swapped in after an initial mustard-gold (`#D9A017`) attempt. This is **the "yellow"
+    token** — FAB, active filter chips, and the carbs macro color all read from it. It's pale
+    enough that it only works because those elements use dark `var(--ink)` text/icons on top, never
+    white — check that before ever reusing `--carbs` somewhere new. `--label-tint`/`--note-bg` are
+    a separate, already-pale sub-family (chip/note surfaces) — not tied to this token, left as-is.
   - Semantic colors (`--good`/`--warning`/`--critical`) left untouched again, per the same
     reasoning as the original fork.
   - A few hardcoded (non-var) leftover colors tied to the *original* Original-App palette —
