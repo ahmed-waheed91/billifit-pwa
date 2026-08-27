@@ -139,6 +139,18 @@ watermark, which wasn't visible to him at all on his real device.
   environment facts" in Original's plan.md, now also true here; used a small inline PowerShell
   `HttpListener` static server instead, scratch-only, not part of the repo) across every mobile
   screen via `App.setScreen(...)` before showing the user and getting explicit approval to push.
+- **Follow-up after this shipped: user still saw no cats on the real installed PWA**, even though
+  the fix above was confirmed working in the local preview. Root cause was almost certainly
+  `service-worker.js`'s cache, not the CSS fix itself: `CACHE_NAME` wasn't bumped in this push, so
+  the browser never detected a byte change in the SW script and kept running the already-installed
+  worker; separately, its network-first navigate handler called plain `fetch(req)`, which can still
+  be satisfied from the browser's own HTTP cache rather than actually hitting the network. Fixed by
+  (1) bumping `CACHE_NAME` to `billifit-v2` (forces old cache purge + fresh precache on next load)
+  and (2) changing the navigate fetch to `fetch(req, { cache: 'no-store' })` so the app shell always
+  revalidates from network when online, never silently serving a stale cached HTML/CSS bundle again.
+  **Any future visual/logic change that needs to reach already-installed devices should bump
+  `CACHE_NAME` again** — it's cheap insurance against this exact class of "I pushed it but the
+  device didn't pick it up" report.
 
 ## If a future session needs to redo or extend this fork
 
