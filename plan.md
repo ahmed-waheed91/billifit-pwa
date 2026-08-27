@@ -15,12 +15,18 @@ convention and workflow this project follows.
 
 ## Live deployment
 
-- **Live URL:** `https://ahmed-waheed91.github.io/nourish-pwa/` — replace with the actual URL once
-  the repo is created and Pages is enabled (see setup steps in the commit that added this file).
+- **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
 - **Source repo:** `https://github.com/ahmed-waheed91/billifit-pwa`, git root at the repo root
-  (same layout as Original App).
+  (same layout as Original App). GitHub Pages serves from this repo's default branch, root path —
+  same config as Original App, except this repo's default branch is **`master`**, not `main` (an
+  artifact of how the local repo was initialized — harmless, just don't assume `main` when
+  scripting against this repo specifically).
 - Ship an update the same way as Original: edit files, `git add -A && git commit -m "..." && git
   push` from this folder.
+- Pushing this repo needed a manual `gh auth login` + `gh repo create ... --push` run by Ahmed
+  directly in his own terminal — Claude Code's own safety classifier blocked the assistant from
+  running `gh repo create --push` itself (a repo-creation/push action), independent of normal
+  permission settings. Expect the same for any future from-scratch repo creation.
 
 ## What was changed from the Original App (2026-08-27)
 
