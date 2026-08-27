@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>BilliFit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#B25E12">
+<meta name="theme-color" content="#2A6FB0">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,34 +16,34 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500&display=swap">
 <style>
   :root{
-    --studio-bg: #F6EACB;
-    --studio-bg-2: #EFDFAE;
-    --ink: #2B1D14;
-    --ink-2: #6B5640;
-    --muted: #9C8968;
-    --surface: #FFFBF0;
-    --card: #FFFCF3;
-    --border: rgba(43,29,20,0.14);
-    --brand: #B25E12;
-    --brand-dark: #7A3D0A;
-    --brand-tint: #FBEACD;
+    --studio-bg: #EAF3FB;
+    --studio-bg-2: #D8E9FA;
+    --ink: #1E2E3D;
+    --ink-2: #4C6178;
+    --muted: #8098AC;
+    --surface: #FFFFFF;
+    --card: #FDFEFF;
+    --border: rgba(30,46,61,0.14);
+    --brand: #2A6FB0;
+    --brand-dark: #1B4D78;
+    --brand-tint: #DFF0FC;
     --good: #0ca30c;      --good-tint: #E9F5DE;
     --warning: #C24A16;   --warning-tint: #FBE3D3;
     --critical: #d03b3b;  --critical-tint: #FCEAE3;
-    --protein: #8C5578;
-    --carbs: #C97F1E;
-    --fat: #3E7C74;
-    --usda: #2E6E66;      --usda-tint: #E3F1EE;
-    --lab-tint: #F1E7C9;  --lab-c: #6B5640;
-    --label-tint: #F6D98A; --label-c: #8C5A14;
-    --note-bg: #FBEFC7;   --note-border: #E8C87A;
-    --shadow: 0 24px 60px rgba(43,29,20,0.16);
+    --protein: #6C63A6;
+    --carbs: #D9A017;
+    --fat: #2F8F86;
+    --usda: #1F6FA0;      --usda-tint: #E2F0FA;
+    --lab-tint: #EAF2FB;  --lab-c: #4C6178;
+    --label-tint: #FBEB9E; --label-c: #7A5C0A;
+    --note-bg: #FFF6D6;   --note-border: #F0DE8C;
+    --shadow: 0 24px 60px rgba(30,46,61,0.16);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     background: var(--studio-bg);
-    background-image: radial-gradient(circle at 1px 1px, rgba(178,94,18,0.09) 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, rgba(42,111,176,0.09) 1px, transparent 0);
     background-size: 22px 22px;
     color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -113,8 +113,8 @@
     display:flex; flex-direction:column;
     position:relative;
   }
-  .scroll-area{ flex:1; min-height:0; overflow-y:auto; position:relative; }
-  .cat-bg{ position:absolute; z-index:-1; pointer-events:none; opacity:0.07; }
+  .scroll-area{ flex:1; min-height:0; overflow-y:auto; position:relative; isolation:isolate; }
+  .cat-bg{ position:absolute; z-index:-1; pointer-events:none; opacity:0.14; }
 
   /* ---------- Shared components ---------- */
   .topbar{ flex-shrink:0; padding:18px 18px 12px 18px; background:var(--card); border-bottom:1px solid var(--border); }
@@ -159,7 +159,7 @@
     background:transparent; color:var(--ink-2); border:1px solid rgba(11,11,11,0.15); flex-shrink:0;
     font-family:inherit;
   }
-  .chip.active{ background:var(--brand); color:#fff; border-color:var(--brand); }
+  .chip.active{ background:var(--carbs); color:var(--ink); border-color:var(--carbs); }
 
   .accordion-head{ display:flex; align-items:center; justify-content:space-between; cursor:pointer; }
   .chev{ width:16px; height:16px; color:var(--muted); transition: transform .15s; flex-shrink:0; }
@@ -167,7 +167,7 @@
 
   .fab{
     position:absolute; right:18px; bottom:92px; width:52px; height:52px; border-radius:26px;
-    background:var(--brand); box-shadow:0 8px 20px rgba(28,92,75,0.35);
+    background:var(--carbs); box-shadow:0 8px 20px rgba(27,77,120,0.35);
     display:flex; align-items:center; justify-content:center; cursor:pointer; border:none;
   }
 
@@ -1823,7 +1823,7 @@ function renderToday(){
     </div>
 
     <button class="fab" onclick="App.setScreen('addfood')" title="Log food">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/></svg>
     </button>
 
     ${bottomNav('today')}
@@ -2620,7 +2620,7 @@ function renderTrends(){
         </div>
         ${tooltip}
         <svg viewBox="0 0 342 176" width="100%" height="176" style="overflow:visible;margin-top:6px;">
-          <rect x="0" y="${bandY.toFixed(1)}" width="342" height="${bandH.toFixed(1)}" fill="rgba(28,92,75,0.10)" rx="4"/>
+          <rect x="0" y="${bandY.toFixed(1)}" width="342" height="${bandH.toFixed(1)}" fill="rgba(27,77,120,0.10)" rx="4"/>
           <line x1="0" y1="146" x2="342" y2="146" stroke="#e1e0d9" stroke-width="1"/>
           <path d="${linePath}" fill="none" stroke="var(--protein)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           ${showPoints ? points.map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="5" fill="${pt.color}" stroke="#fff" stroke-width="2" style="cursor:pointer;" onclick="App.selectTrendPoint(${pt.k})"/>`).join('') : ''}
@@ -3008,7 +3008,7 @@ function renderDesktop(){
             <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:8px;">Calories · trend</div>
             ${calSpark ? `
               <svg viewBox="0 0 260 70" width="100%" height="70">
-                <rect x="0" y="${calSpark.bandY}" width="260" height="${calSpark.bandH}" fill="rgba(28,92,75,0.10)" rx="3"/>
+                <rect x="0" y="${calSpark.bandY}" width="260" height="${calSpark.bandH}" fill="rgba(27,77,120,0.10)" rx="3"/>
                 <path d="${calSpark.path}" fill="none" stroke="var(--protein)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <div style="font-size:11px;color:var(--muted);margin-top:4px;">avg ${calSpark.avg} kcal over ${calSpark.count} days · target &lt; ${calT.value.toLocaleString()}</div>
@@ -3018,7 +3018,7 @@ function renderDesktop(){
             <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:8px;">Protein · trend</div>
             ${protSpark ? `
               <svg viewBox="0 0 260 70" width="100%" height="70">
-                <rect x="0" y="${protSpark.bandY}" width="260" height="${protSpark.bandH}" fill="rgba(28,92,75,0.10)" rx="3"/>
+                <rect x="0" y="${protSpark.bandY}" width="260" height="${protSpark.bandH}" fill="rgba(27,77,120,0.10)" rx="3"/>
                 <path d="${protSpark.path}" fill="none" stroke="var(--protein)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <div style="font-size:11px;color:var(--muted);margin-top:4px;">avg ${protSpark.avg}g over ${protSpark.count} days · target ${protT.low}–${protT.high}g</div>
