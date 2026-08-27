@@ -67,6 +67,18 @@ convention and workflow this project follows.
 - **Service worker cache name**: bumped to `billifit-v1` (was `nourish-v3`) so this app's cache
   doesn't collide with anything — purely defensive, these are different origins anyway once
   deployed to a separate repo/URL.
+- **`localStorage` key — real conflict found and fixed before first push**: both this repo and the
+  Original App are GitHub Pages *project* sites under the same username, i.e. both live at
+  `ahmed-waheed91.github.io/<repo>/` — same scheme+host+port, differing only by path. Browsers
+  scope `localStorage` (and `sessionStorage`) to **origin only, not path**, so the two apps are
+  **not** automatically isolated the way separate repos might suggest. The Original App saves
+  everything under one fixed key, `LOCAL_STORAGE_KEY = 'nourish_backup_v2'` — this repo started as
+  a byte-for-byte copy, so it initially had the exact same key, which would have meant both apps
+  installed on the same phone silently read/wrote the same data bucket. Fixed by changing this
+  repo's key to `'billifit_backup_v1'` (search `LOCAL_STORAGE_KEY` in `index.html`) before ever
+  deploying it. **Any future cosmetic fork of either app must repeat this check** — Cache Storage
+  is fine on its own (different `CACHE_NAME` strings per app), but `localStorage` needs an explicit
+  distinct key since nothing about "different repo" enforces that automatically.
 - Nothing else changed: no logic, no data model, no new features. Verified by running both apps
   side-by-side locally and exercising every screen (`App.setScreen(...)` through each) with no new
   console errors beyond the pre-existing, tooling-only service-worker-registration failure that
