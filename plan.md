@@ -22,8 +22,16 @@ Four functional changes — memory-only export/import with duplicate resolution,
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
 implemented here in the same pass as the Original App, per the corrected rule above. Full
 implementation detail, rationale, and edge cases live in **Original's `plan.md`** (search for "Four
-functional features") — this repo's copy is logic-identical, just cosmetically different. Not yet
-confirmed by the user on a real device.
+functional features") — this repo's copy is logic-identical, just cosmetically different.
+
+**2026-08-28 follow-up fixes** (also logic-identical to Original, see its `plan.md` items 5-6 for
+full detail): the cross-tab search fix above only covered the Add Food screen — the user's original
+ask was ambiguous and actually meant the **Memory & Library screen's** search (placeholder literally
+says "Search memory..."), which got the same treatment (`App.filterLibraryRows`, `#lib-groups`,
+`#lib-extras`) after the user reported it was still per-tab. Also fixed: the Trends chart's point
+tooltip pushing off-frame for dots near the left/right edge (was positioning in raw SVG viewBox
+units treated as px, with no clamping — now a clamped percentage). Not yet confirmed by the user on
+a real device.
 
 ## Live deployment
 
