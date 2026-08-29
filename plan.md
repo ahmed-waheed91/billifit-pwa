@@ -8,10 +8,22 @@ every real bug fixed to date. This file only documents what's different here and
 ## What this repo is
 
 A copy of the Original App with **name, icon, color palette, and background art changed — nothing
-else.** Same `index.html` logic, same data model, same localStorage schema, same features. If a
-functional bug or feature request comes up, it almost certainly belongs in the Original App first,
-then gets ported here — see the Original's plan.md "Limited Edition App" section for the naming
-convention and workflow this project follows.
+else.** Same `index.html` logic, same data model, same localStorage schema, same features.
+**Corrected 2026-08-28 (user's exact words): "any and all changes that change the way the app
+functions in any shape or form are for both editions. only the Aesthetic aspect is specific to the
+limited Edition."** So any functional/behavioral/logic/data change gets implemented in **both** this
+app and Original in the same pass — not "Original first, port later" as a separate step. Only
+cosmetic changes (colors, icon, background art, name/branding) are BilliFit-only. See the Original's
+plan.md "Limited Edition App" section for the full naming convention.
+
+## Functional features (2026-08-28)
+
+Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
+Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
+implemented here in the same pass as the Original App, per the corrected rule above. Full
+implementation detail, rationale, and edge cases live in **Original's `plan.md`** (search for "Four
+functional features") — this repo's copy is logic-identical, just cosmetically different. Not yet
+confirmed by the user on a real device.
 
 ## Live deployment
 
@@ -158,6 +170,76 @@ watermark, which wasn't visible to him at all on his real device.
   `CACHE_NAME` again** — it's cheap insurance against this exact class of "I pushed it but the
   device didn't pick it up" report.
 
+## Icon work paused — waiting on user's own artwork (2026-08-28)
+
+After the flat-yellow/bigger-cat icon shipped (below), the user asked for a further icon redesign
+based on a specific reference cat illustration. That reference turned out to be someone else's
+copyrighted artwork (visible artist signature on one version) — declined to trace/use it directly,
+including after the user asserted personal-use permission, since embedding it in a public,
+distributed PWA icon isn't covered by "personal use" and can't be verified from a chat claim
+either way. Several original, inspired-by recreations were attempted (hula-hoop pose, then a
+minimalist single-line-art cat) and shown as options; none matched what the user wanted, and
+hand-plotting a precise single continuous silhouette curve from memory (no iterative visual editor)
+proved unreliable — see attempts in the "Icon regenerated" section below for the technique that
+worked reasonably (block shapes + double-fill outline trick) vs. the one that didn't (one long
+hand-tuned bezier path).
+
+**Current state**: user says the line-art reference (cat with curled paw near cheek + small heart)
+*is* their own original work, but doesn't have the file accessible right now. Asked them to send
+either (a) one square master PNG, ≥512×512, opaque background filled edge-to-edge, cat centered —
+sizes below can be derived from it — or (b) the full 5-file set themselves. **Spec given to user:**
+`icon-512.png` 512×512, `icon-192.png` 192×192, `icon-512-maskable.png` 512×512 (keep content
+within inner ~66–80%, Android may crop to circle/squircle), `apple-touch-icon.png` 180×180,
+`favicon-32.png` 32×32 (keep bold/simple). All PNG, fully opaque, no transparency (see "why are the
+edges white" fix below for why that matters).
+
+**Next step**: when the user provides that file, composite it directly (resize/crop per size above)
+rather than attempting another from-memory recreation — this whole detour started because a
+from-memory approach isn't reliable for a precise character design. The current live icon (flat
+Pantone 0131 U yellow background, bigger/centered belt-cat, shipped further below) stays as-is
+until then.
+
+As of this pause, the user is shifting focus to **functional** changes/improvements next (not
+aesthetic) — per the Original-vs-Limited-Edition convention elsewhere in this file, functional work
+normally belongs in the Original App first. Confirm which app before assuming.
+
+## Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U background (2026-08-28)
+
+The original `make_icons.py` (Pillow) script was never checked into this repo and this machine has
+no Python (see "Known environment facts" in Original's plan.md — that fact was true only for the
+*original* dev machine; this one has neither Python nor Node). So when the user asked to make the
+icon's cat bigger/more centered and change the background to Pantone Yellow 0131 U, the icon set
+was regenerated a different way: **Canvas 2D, rendered in the Browser pane and rasterized to PNG**,
+not Pillow. The drawing logic (paths for ears/head/body/belt/tail/whiskers, in a 200×200 coordinate
+space, same silhouette style as the original hand-drawn icon) was written inline as browser
+JavaScript, run once via `javascript_exec`, and each canvas's `toBlob()` output was `fetch()`-
+POSTed to a small upload endpoint added temporarily to the local scratch preview server (a
+PowerShell `HttpListener` script, not part of this repo) rather than round-tripped through the
+assistant's own context as base64 — that part of the workflow is disposable/one-off, not reusable
+infrastructure.
+- **Background**: flat `#FBF59B` (Pantone Yellow 0131 U — the user's exact requested shade for the
+  *icon specifically*; note this is deliberately different from the in-app `--carbs` accent, which
+  is Pantone 11-0616 TCX `#F2E6B1` — two separate, independently-chosen yellows, don't conflate
+  them). No gradient, unlike the original marigold-gradient icon.
+- **Cat**: same silhouette elements as before (plum ears, cream body/head/tail, dark ink face,
+  teal tick-marked "measuring tape" belt, coiled tail tip) but scaled up and recentered — the
+  original left noticeably more empty background margin, especially top/bottom.
+- Regenerated all 5 files, **all full-bleed opaque yellow, no transparency anywhere**:
+  `icon-512.png`/`icon-192.png` initially shipped with baked-in rounded corners and transparent
+  corner pixels (matching the original icon's style) — user immediately flagged this ("why are the
+  edges white?", since transparent PNG corners render as white/whatever the viewer's background is)
+  and asked for the corners filled with the same yellow instead. Fixed by dropping the rounded-rect
+  clipping entirely and just filling the whole square, same as the other three sizes already were.
+  `icon-512-maskable.png` (cat kept inside a safe-zone-scaled version so Android's own masking
+  doesn't clip it), `apple-touch-icon.png` (tail omitted, zoomed closer — matches the original's
+  cropped composition style), `favicon-32.png` (head/ears only, no whiskers/belt — too fine to read
+  at that size). **Don't reintroduce baked-in rounded corners on any of these** — the user
+  explicitly wants flat full-bleed color, not a rounded-square-on-transparent look.
+- **If asked to tweak the icon again**: the canvas-drawing JS is not saved anywhere in the repo
+  (same "disposable one-off script" pattern as the original `make_icons.py` — intentional, per
+  existing convention below). Rebuild it from this description rather than trying to find an
+  old script.
+
 ## If a future session needs to redo or extend this fork
 
 - To re-sync a future Original App change into this fork: diff the relevant section of Original's
@@ -165,7 +247,8 @@ watermark, which wasn't visible to him at all on his real device.
   whole file, since the color tokens, font link, cat-symbol/`catBg()` additions, and the 8
   `${catBg(...)}` insertion points listed above are this fork's entire reason to exist and are not
   present in Original at all.
-- The `make_icons.py` script used to generate `icons/*.png` was run from a scratch/temp location
-  and is not checked into this repo (matches how the Original App's own one-off icon-generation
-  script wasn't kept either). If icons need regenerating, a new script can be written from the
-  color values and mascot description in this file.
+- Icon regeneration: see "Icon regenerated" section above for the current (canvas-based) method —
+  supersedes the original `make_icons.py`/Pillow approach, which needs Python this machine doesn't
+  have. Either approach is disposable/one-off; neither script is checked into this repo. If icons
+  need regenerating again, rebuild from the color values and mascot description in this file rather
+  than hunting for an old script.
