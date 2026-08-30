@@ -37,8 +37,15 @@ usual breakfast"). Plain Saved Foods get a portion strip (100/75/50/25% chips + 
 checked, scaling every macro proportionally; composite Saved Foods get a "Whole recipe portion"
 control that rescales every ingredient's weight together from the food's original saved weights.
 Same implementation as Original — see its `plan.md` item 7 for full detail, including why the
-custom-percentage inputs deliberately skip `render()`. Not yet confirmed by the user on a real
-device.
+custom-percentage inputs deliberately skip `render()`.
+
+**2026-08-28, same-day follow-up (item 8 in Original's `plan.md`)**: log a portion by weight, not
+just percentage — plain Saved Foods get an optional `totalWeightG` field (create/edit form) and a
+weight box that back-calculates the percentage; composite Saved Foods get the same weight box on
+their "Whole recipe portion" control, with no new field needed since their total weight is just the
+sum of their own ingredient weights. Full detail, including a precision gotcha worth reading before
+touching this again (percentages are kept as unrounded floats internally to avoid weight-field
+drift), lives in Original's `plan.md` item 8. Not yet confirmed by the user on a real device.
 
 ## Live deployment
 
