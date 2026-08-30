@@ -30,8 +30,15 @@ ask was ambiguous and actually meant the **Memory & Library screen's** search (p
 says "Search memory..."), which got the same treatment (`App.filterLibraryRows`, `#lib-groups`,
 `#lib-extras`) after the user reported it was still per-tab. Also fixed: the Trends chart's point
 tooltip pushing off-frame for dots near the left/right edge (was positioning in raw SVG viewBox
-units treated as px, with no clamping — now a clamped percentage). Not yet confirmed by the user on
-a real device.
+units treated as px, with no clamping — now a clamped percentage).
+
+**2026-08-28, new feature**: log a partial portion of a Saved Food (e.g. "I only ate half of my
+usual breakfast"). Plain Saved Foods get a portion strip (100/75/50/25% chips + custom field) once
+checked, scaling every macro proportionally; composite Saved Foods get a "Whole recipe portion"
+control that rescales every ingredient's weight together from the food's original saved weights.
+Same implementation as Original — see its `plan.md` item 7 for full detail, including why the
+custom-percentage inputs deliberately skip `render()`. Not yet confirmed by the user on a real
+device.
 
 ## Live deployment
 
