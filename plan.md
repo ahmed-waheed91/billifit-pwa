@@ -45,7 +45,13 @@ weight box that back-calculates the percentage; composite Saved Foods get the sa
 their "Whole recipe portion" control, with no new field needed since their total weight is just the
 sum of their own ingredient weights. Full detail, including a precision gotcha worth reading before
 touching this again (percentages are kept as unrounded floats internally to avoid weight-field
-drift), lives in Original's `plan.md` item 8. Not yet confirmed by the user on a real device.
+drift), lives in Original's `plan.md` item 8.
+
+**2026-08-28, item 9**: "Meal breakdown" now always displays in a fixed Breakfast/Lunch/Snack/Dinner
+order regardless of logging order — user asked for manual drag-reorder, a simpler fixed-order
+alternative was offered instead and preferred; see Original's `plan.md` item 9 for the reasoning
+(worth remembering for future "let me reorder X" requests) and the `sortedMealsForDisplay()` helper
+detail. Not yet confirmed by the user on a real device.
 
 ## Live deployment
 
