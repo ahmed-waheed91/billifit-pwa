@@ -18,11 +18,15 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28)
 
+_Last updated 2026-09-02 — no feature currently in progress; see status notes below and Original's
+"Immediate next steps" for what's confirmed vs. still awaiting real-device confirmation._
+
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
-implemented here in the same pass as the Original App, per the corrected rule above. Full
-implementation detail, rationale, and edge cases live in **Original's `plan.md`** (search for "Four
-functional features") — this repo's copy is logic-identical, just cosmetically different.
+implemented here in the same pass as the Original App, per the corrected rule above, and are
+**user-confirmed working**. Full implementation detail, rationale, and edge cases live in
+**Original's `plan.md`** (search for "Four functional features") — this repo's copy is
+logic-identical, just cosmetically different.
 
 **2026-08-28 follow-up fixes** (also logic-identical to Original, see its `plan.md` items 5-6 for
 full detail): the cross-tab search fix above only covered the Add Food screen — the user's original
@@ -32,26 +36,35 @@ says "Search memory..."), which got the same treatment (`App.filterLibraryRows`,
 tooltip pushing off-frame for dots near the left/right edge (was positioning in raw SVG viewBox
 units treated as px, with no clamping — now a clamped percentage).
 
-**2026-08-28, new feature**: log a partial portion of a Saved Food (e.g. "I only ate half of my
-usual breakfast"). Plain Saved Foods get a portion strip (100/75/50/25% chips + custom field) once
-checked, scaling every macro proportionally; composite Saved Foods get a "Whole recipe portion"
-control that rescales every ingredient's weight together from the food's original saved weights.
-Same implementation as Original — see its `plan.md` item 7 for full detail, including why the
-custom-percentage inputs deliberately skip `render()`.
+**2026-08-28, new feature (working in practice** — user asked for the weight-based follow-up below
+rather than reporting a problem, though never explicitly said "confirmed"): log a partial portion
+of a Saved Food (e.g. "I only ate half of my usual breakfast"). Plain Saved Foods get a portion
+strip (100/75/50/25% chips + custom field) once checked, scaling every macro proportionally;
+composite Saved Foods get a "Whole recipe portion" control that rescales every ingredient's weight
+together from the food's original saved weights. Same implementation as Original — see its
+`plan.md` item 7 for full detail, including why the custom-percentage inputs deliberately skip
+`render()`.
 
-**2026-08-28, same-day follow-up (item 8 in Original's `plan.md`)**: log a portion by weight, not
-just percentage — plain Saved Foods get an optional `totalWeightG` field (create/edit form) and a
-weight box that back-calculates the percentage; composite Saved Foods get the same weight box on
-their "Whole recipe portion" control, with no new field needed since their total weight is just the
-sum of their own ingredient weights. Full detail, including a precision gotcha worth reading before
-touching this again (percentages are kept as unrounded floats internally to avoid weight-field
-drift), lives in Original's `plan.md` item 8.
+**2026-08-28, same-day follow-up (item 8 in Original's `plan.md`), built and self-tested, not yet
+confirmed on a real device**: log a portion by weight, not just percentage — plain Saved Foods get
+an optional `totalWeightG` field (create/edit form) and a weight box that back-calculates the
+percentage; composite Saved Foods get the same weight box on their "Whole recipe portion" control,
+with no new field needed since their total weight is just the sum of their own ingredient weights.
+Full detail, including a precision gotcha worth reading before touching this again (percentages are
+kept as unrounded floats internally to avoid weight-field drift), lives in Original's `plan.md`
+item 8.
 
 **2026-08-28, item 9**: "Meal breakdown" now always displays in a fixed Breakfast/Lunch/Snack/Dinner
 order regardless of logging order — user asked for manual drag-reorder, a simpler fixed-order
 alternative was offered instead and preferred; see Original's `plan.md` item 9 for the reasoning
 (worth remembering for future "let me reorder X" requests) and the `sortedMealsForDisplay()` helper
 detail. Not yet confirmed by the user on a real device.
+
+**Standing watch item (2026-08-28)**: user asked to be proactively told if this app's overall
+size/build weight ever becomes significant enough to matter (not specific to any one feature) —
+same instruction applies to this repo, since it's the same architecture (single monolithic
+`index.html`, no build step). Full reasoning and the rough size baseline live in Original's
+`plan.md`, under "Standing watch item: app size / build weight."
 
 ## Live deployment
 
