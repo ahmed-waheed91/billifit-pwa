@@ -16,10 +16,10 @@ app and Original in the same pass — not "Original first, port later" as a sepa
 cosmetic changes (colors, icon, background art, name/branding) are BilliFit-only. See the Original's
 plan.md "Limited Edition App" section for the full naming convention.
 
-## Functional features (2026-08-28)
+## Functional features (2026-08-28, and 2026-09-04)
 
-_Last updated 2026-09-02 — no feature currently in progress; see status notes below and Original's
-"Immediate next steps" for what's confirmed vs. still awaiting real-device confirmation._
+_Last updated 2026-09-04 — no feature currently in progress; everything listed below (including the
+2026-09-04 batch) is user-confirmed working on a real device. See Original's "Immediate next steps"._
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -65,6 +65,26 @@ size/build weight ever becomes significant enough to matter (not specific to any
 same instruction applies to this repo, since it's the same architecture (single monolithic
 `index.html`, no build step). Full reasoning and the rough size baseline live in Original's
 `plan.md`, under "Standing watch item: app size / build weight."
+
+## Three more functional features (2026-09-04)
+
+Three more user-requested, logic-identical-to-Original features, each built and confirmed one at a
+time: **backdated logging** (add food/water/weight to a past day, from History → Day/Month view —
+`App.startBackdateLog`/`getOrCreateHistoryDay`/`recomputeHistoryDay`, and a "Logging to [date]"
+banner in the Add Food screen), **sharing memory items** (a Share icon per row in Memory & Library,
+a **Select** mode to share several at once, and a "paste shared text to import" option in Export →
+Import memory), and an **Android back button that navigates within the app** as a fixed depth-based
+hierarchy (any non-Today tab → Today directly; a closeable sub-panel closes first, then Today).
+
+The share feature and the back button each needed real, multi-round debugging on the real device
+before landing correctly — a Web Share API user-activation quirk (can't retry `navigator.share()`
+a second time after one call, even a failed one, since it consumes the tap's activation), a
+Chromium platform restriction (file-attachment sharing is restricted to a MIME/extension safe list
+that excludes `.json`, and `canShare()` can falsely report `true` for a type that then gets
+rejected), and a back-button design that needed to be a fixed 2-level depth rather than a replay of
+every screen visited. **Full detail, the exact platform gotchas, and what not to reintroduce are in
+Original's `plan.md`, under "Three features (2026-09-04)" — read that before touching either area
+again**, since the same code shape (and the same traps) exist here.
 
 ## Live deployment
 
