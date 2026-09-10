@@ -16,10 +16,10 @@ app and Original in the same pass — not "Original first, port later" as a sepa
 cosmetic changes (colors, icon, background art, name/branding) are BilliFit-only. See the Original's
 plan.md "Limited Edition App" section for the full naming convention.
 
-## Functional features (2026-08-28, and 2026-09-04)
+## Functional features (2026-08-28, 2026-09-04, and 2026-09-11)
 
-_Last updated 2026-09-04 — no feature currently in progress; everything listed below (including the
-2026-09-04 batch) is user-confirmed working on a real device. See Original's "Immediate next steps"._
+_Last updated 2026-09-11 — no feature currently in progress; everything listed below (including the
+2026-09-11 batch) is user-confirmed working on a real device. See Original's "Immediate next steps"._
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -85,6 +85,40 @@ rejected), and a back-button design that needed to be a fixed 2-level depth rath
 every screen visited. **Full detail, the exact platform gotchas, and what not to reintroduce are in
 Original's `plan.md`, under "Three features (2026-09-04)" — read that before touching either area
 again**, since the same code shape (and the same traps) exist here.
+
+## Session fixes and a new Archive feature (2026-09-11)
+
+Two real bugs reported from actual on-device use, both fixed and confirmed, followed by a new
+Archive section in Memory & library — logic-identical to Original, implemented here in the same
+pass per the corrected functional-changes-go-in-both-apps rule. Full detail, including the exact
+root causes and the "don't reintroduce" warnings, lives in **Original's `plan.md`, under "Session
+fixes and a new Archive feature (2026-09-11)"** — read that before touching any of this again, since
+the same code shape (and the same traps) exist here.
+
+- **Add Food search silently reset when selecting a saved food**: tapping a row to select it,
+  adjusting its portion via the quick-percent chips, or expanding a composite recipe row all called
+  a full `render()`, which wiped the search box (pure DOM state, not tracked in `App.state`) and
+  the filtered list along with it. Fixed by patching just the affected row's DOM node
+  (`App.patchAddFoodRow`) instead of re-rendering the whole screen — the general pattern to follow
+  for any future one-row toggle inside a searchable list.
+- **Updates not reaching the device even after a full close/relaunch**: root cause was GitHub
+  Pages' `Cache-Control: max-age=600` header combined with the service worker's navigate fetch not
+  forcing a real network round-trip — so the browser's own HTTP cache, not the service worker, was
+  quietly serving stale HTML for up to 10 minutes after every deploy. **This repo's service worker
+  already had the `{ cache: 'no-store' }` fix** (from the earlier 2026-08-27 re-theme cache-busting
+  work — see "Follow-up after this shipped" further down this file); Original's was missing it and
+  got the same fix applied, closing a real pre-existing gap between the two apps' service workers.
+- **New Archive section**: a 4th tab in Memory & library (Saved foods/Ingredients/USDA/Archive) for
+  items used occasionally. Archiving sets an `.archived` flag on the item **in place** (it stays in
+  its original `foods`/`ingredients`/`usda` array, just hidden from that tab's list and the main
+  cross-tab search) rather than moving it to a separate list — so "which section it was archived
+  from" needs no extra bookkeeping, and the item is still fully usable elsewhere (e.g. logging it).
+  Archive has its own dedicated search box, separate from the main one. Revised twice after the user
+  tried it: archiving now shows a confirm card first (matching the existing Move/Delete pattern,
+  instead of applying immediately), and the row of 5 separate action icons (Share/Move/Archive/
+  Edit/Delete) was collapsed into a single "⋯" button that opens a dropdown — which required
+  changing the Saved-foods row's `overflow:hidden` to `overflow:visible` so the dropdown isn't
+  clipped by the row's own accordion-clipping wrapper.
 
 ## Live deployment
 
