@@ -16,10 +16,10 @@ app and Original in the same pass — not "Original first, port later" as a sepa
 cosmetic changes (colors, icon, background art, name/branding) are BilliFit-only. See the Original's
 plan.md "Limited Edition App" section for the full naming convention.
 
-## Functional features (2026-08-28, 2026-09-04, and 2026-09-11)
+## Functional features (2026-08-28, 2026-09-04, 2026-09-11, and 2026-09-12)
 
-_Last updated 2026-09-11 — no feature currently in progress; everything listed below (including the
-2026-09-11 batch) is user-confirmed working on a real device. See Original's "Immediate next steps"._
+_Last updated 2026-09-12 — no feature currently in progress; everything listed below (including the
+2026-09-12 batch) is user-confirmed working on a real device. See Original's "Immediate next steps"._
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -119,6 +119,43 @@ the same code shape (and the same traps) exist here.
   Edit/Delete) was collapsed into a single "⋯" button that opens a dropdown — which required
   changing the Saved-foods row's `overflow:hidden` to `overflow:visible` so the dropdown isn't
   clipped by the row's own accordion-clipping wrapper.
+
+## Session features and fixes (2026-09-12)
+
+Five pieces of work, logic-identical to Original, implemented here in the same pass per the
+corrected functional-changes-go-in-both-apps rule. Full detail, exact root causes, and the
+"don't reintroduce" warnings live in **Original's `plan.md`, under "Session features and fixes
+(2026-09-12)"** — read that before touching any of this again, since the same code shape (and the
+same traps) exist here.
+
+- **Macro-split explainer popup** on Today, opened via a new (i) button on the "Macro split · share
+  of calories" card — shows the calorie-conversion formula and a live per-macro breakdown of today's
+  actual numbers. The first popup-with-backdrop in either app, and the first overlay that lives on
+  the Today screen itself, which needed real changes to the shared `hasOpenOverlay`/
+  `closeOpenOverlay`/`_syncBackStack` back-button plumbing (previously hardcoded to only ever compute
+  overlay depth when away from Today) so the hardware/gesture back button closes it correctly.
+- **A second round of the item-13 search-reset bug**, this time in the Memory tab's "⋯" kebab menu
+  (added in item 14's second revision, after item 13 shipped, so it was never covered by that fix) —
+  and, once that was fixed and tested, in the Move/Archive/Delete confirm-card flow the kebab menu
+  opens, which item 14's own writeup had already flagged as a known, deliberately-left gap. Both
+  fixed with the same per-row DOM-patch pattern as item 13 (`App.patchLibraryRow`, plus a
+  `row.remove()` for Delete/Archive's actual commit step, which makes the row disappear for real).
+- **"Quick add"**: a new tab on the Log food screen for logging a one-off item (name +
+  calories/protein/carbs/fat, fiber/sugar/sodium optional) straight into today's meal without
+  creating any Memory entry — for something you won't eat again and don't want cluttering Saved
+  foods/Ingredients/USDA. Building it surfaced a real bug in the shared meal-target-chip selector
+  (`setTargetMeal` was calling a full `render()`, silently wiping whatever was typed into this new
+  form or into any Ingredients/USDA row's weight box) — fixed by patching the chips/button/row
+  labels in place instead.
+- **Calories target changed from a fixed ceiling to a low-high range** (default 1,500–1,700 kcal,
+  same as Original), so it now behaves like Protein/Carbs/Fat — adjustable the same way in Settings,
+  with Under/On track/Over states. The target system was already generic enough that this took
+  almost no code beyond the Today hero card (which has its own bespoke ceiling-only rendering, unlike
+  the small stat tiles) and the desktop dashboard's calorie sparkline. Existing saved data with the
+  old ceiling shape is migrated to the new range on next load.
+- **Calories card now colored by status**: red when over, amber (`var(--warning)`, same color as the
+  "Under" pill everywhere else in the app) when under, brand blue when in range — previously always
+  brand blue regardless of status.
 
 ## Live deployment
 
@@ -297,6 +334,22 @@ until then.
 As of this pause, the user is shifting focus to **functional** changes/improvements next (not
 aesthetic) — per the Original-vs-Limited-Edition convention elsewhere in this file, functional work
 normally belongs in the Original App first. Confirm which app before assuming.
+
+**Found 2026-09-12, not yet resolved — read before touching icons again:** `git log --oneline --
+icons/` shows exactly **one** commit ever touching this repo's `icons/` folder — the original
+2026-08-27 fork commit. That means the "Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U
+background" work documented in the section right below **was never committed or pushed** — the five
+regenerated PNGs have been sitting as uncommitted changes in this repo's working tree since
+2026-08-28 (confirmed via `git status`/`git diff --stat` on 2026-09-12, file mtimes match that same
+session), invisible to git the whole time. **The live site at
+`https://ahmed-waheed91.github.io/billifit-pwa/` almost certainly still shows the icon from *before*
+that regeneration** — the original fork's icon, not the bigger-cat/yellow-background version this
+file describes as shipped. Left uncommitted deliberately on 2026-09-12 (user said "we'll come back to
+icons later," not now) rather than committed sight-unseen or discarded. **Next time icons come up:
+first check whether those 5 uncommitted files are still sitting there and are the correct current
+intent** (`git status` in this repo) **before doing anything else** — either commit+push them as-is,
+regenerate fresh ones if the user wants something different by then, or reconcile with whatever the
+user's own supplied artwork (mentioned below) ends up being.
 
 ## Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U background (2026-08-28)
 
