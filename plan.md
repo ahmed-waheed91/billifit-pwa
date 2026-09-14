@@ -18,8 +18,11 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, and 2026-09-12)
 
-_Last updated 2026-09-12 — no feature currently in progress; everything listed below (including the
-2026-09-12 batch) is user-confirmed working on a real device. See Original's "Immediate next steps"._
+_Last updated 2026-09-14 — no feature currently in progress; everything listed below (including the
+2026-09-12 batch) is user-confirmed working on a real device. See Original's "Immediate next steps".
+**2026-09-14: Original's icon was replaced with Ahmed's own artwork — this was explicitly scoped as
+Nourish-only/cosmetic and nothing in this repo changed because of it.** See "Icon work paused" below
+for why the lessons from that session still matter here before BilliFit's own icon work resumes._
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -350,6 +353,20 @@ first check whether those 5 uncommitted files are still sitting there and are th
 intent** (`git status` in this repo) **before doing anything else** — either commit+push them as-is,
 regenerate fresh ones if the user wants something different by then, or reconcile with whatever the
 user's own supplied artwork (mentioned below) ends up being.
+
+**Also read before touching icons again: Original's `plan.md`, "App icon replaced with custom
+artwork (2026-09-14)"** — Ahmed replaced Nourish's icon with his own Photoshop artwork that session
+(Nourish-only, nothing here changed), and two things learned there apply identically to this repo's
+eventual icon redo:
+1. **`icon-512-maskable.png` cannot be transparent, ever** — Android's maskable-icon role requires a
+   fully opaque image so it has real pixels to mask; if Ahmed's future BilliFit artwork is supplied
+   transparent, flatten the maskable variant onto a solid fill (ideally sampled from the artwork's
+   own background, not a hardcoded color) same as Original now does.
+2. **Any icon file replaced with different bytes but the same filename needs `CACHE_NAME` bumped in
+   `service-worker.js`** (currently `billifit-v2`, see "Follow-up after this shipped" above) or an
+   already-installed device keeps serving the old cached icon indefinitely, hard-refresh included —
+   this is a separate cache layer from GitHub Pages' HTTP cache (already handled by the `{cache:
+   'no-store'}` fix on the navigate handler) and needs its own bump every time.
 
 ## Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U background (2026-08-28)
 
