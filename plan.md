@@ -21,8 +21,11 @@ plan.md "Limited Edition App" section for the full naming convention.
 _Last updated 2026-09-14 — no feature currently in progress; everything listed below (including the
 2026-09-12 batch) is user-confirmed working on a real device. See Original's "Immediate next steps".
 **2026-09-14: Original's icon was replaced with Ahmed's own artwork — this was explicitly scoped as
-Nourish-only/cosmetic and nothing in this repo changed because of it.** See "Icon work paused" below
-for why the lessons from that session still matter here before BilliFit's own icon work resumes._
+Nourish-only/cosmetic and nothing in this repo changed because of it.** Same day, the stale
+never-committed 2026-08-28 icon regeneration sitting in this repo's working tree was discarded at the
+user's request ("we will come back fresh to that at a later stage") — working tree is now clean. See
+"Icon work paused" below for the full closure and for why the lessons from Original's session still
+matter whenever BilliFit's own icon work resumes._
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -330,29 +333,34 @@ edges white" fix below for why that matters).
 
 **Next step**: when the user provides that file, composite it directly (resize/crop per size above)
 rather than attempting another from-memory recreation — this whole detour started because a
-from-memory approach isn't reliable for a precise character design. The current live icon (flat
-Pantone 0131 U yellow background, bigger/centered belt-cat, shipped further below) stays as-is
-until then.
+from-memory approach isn't reliable for a precise character design. **The current live icon is
+actually the original 2026-08-27 fork icon** (marigold-gradient, smaller/less-centered cat) — see the
+2026-09-14 update below for why the bigger-cat/yellow-background version described further down this
+file was never actually live.
 
 As of this pause, the user is shifting focus to **functional** changes/improvements next (not
 aesthetic) — per the Original-vs-Limited-Edition convention elsewhere in this file, functional work
 normally belongs in the Original App first. Confirm which app before assuming.
 
-**Found 2026-09-12, not yet resolved — read before touching icons again:** `git log --oneline --
-icons/` shows exactly **one** commit ever touching this repo's `icons/` folder — the original
-2026-08-27 fork commit. That means the "Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U
-background" work documented in the section right below **was never committed or pushed** — the five
-regenerated PNGs have been sitting as uncommitted changes in this repo's working tree since
-2026-08-28 (confirmed via `git status`/`git diff --stat` on 2026-09-12, file mtimes match that same
-session), invisible to git the whole time. **The live site at
-`https://ahmed-waheed91.github.io/billifit-pwa/` almost certainly still shows the icon from *before*
-that regeneration** — the original fork's icon, not the bigger-cat/yellow-background version this
-file describes as shipped. Left uncommitted deliberately on 2026-09-12 (user said "we'll come back to
-icons later," not now) rather than committed sight-unseen or discarded. **Next time icons come up:
-first check whether those 5 uncommitted files are still sitting there and are the correct current
-intent** (`git status` in this repo) **before doing anything else** — either commit+push them as-is,
-regenerate fresh ones if the user wants something different by then, or reconcile with whatever the
-user's own supplied artwork (mentioned below) ends up being.
+**Found 2026-09-12, resolved 2026-09-14 by discarding — read before touching icons again:**
+`git log --oneline -- icons/` showed exactly **one** commit ever touching this repo's `icons/`
+folder — the original 2026-08-27 fork commit. That meant the "Icon regenerated: bigger/centered cat,
+Pantone Yellow 0131 U background" work documented in the section right below **was never committed or
+pushed** — the five regenerated PNGs had been sitting as uncommitted changes in this repo's working
+tree since 2026-08-28 (confirmed via `git status`/`git diff --stat` on 2026-09-12, file mtimes
+matched that same session), invisible to git the whole time, so the live site never actually showed
+that version. Left in place uncommitted on 2026-09-12 pending a decision (user said "we'll come back
+to icons later," not now).
+
+**2026-09-14: user decided to discard them rather than reconcile** — "we will come back fresh to
+that at a later stage." Ran `git checkout -- icons/apple-touch-icon.png icons/favicon-32.png
+icons/icon-192.png icons/icon-512-maskable.png icons/icon-512.png` to restore all five to the last
+committed (original 2026-08-27 fork) version; working tree is now clean and matches what's actually
+live. **The bigger-cat/Pantone-0131U-yellow redesign in the "Icon regenerated" section below is
+therefore historical record only, not a pending or current state** — nothing needs reconciling next
+time icons come up. Any future icon work (this repo's own redesign, or porting Nourish's new
+2026-09-14 artwork/palette here as a starting point) starts fresh from the current live icon, not
+from that discarded attempt.
 
 **Also read before touching icons again: Original's `plan.md`, "App icon replaced with custom
 artwork (2026-09-14)"** — Ahmed replaced Nourish's icon with his own Photoshop artwork that session
@@ -368,7 +376,11 @@ eventual icon redo:
    this is a separate cache layer from GitHub Pages' HTTP cache (already handled by the `{cache:
    'no-store'}` fix on the navigate handler) and needs its own bump every time.
 
-## Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U background (2026-08-28)
+## Icon regenerated: bigger/centered cat, Pantone Yellow 0131 U background (2026-08-28) — discarded 2026-09-14
+
+⚠️ **This work was never committed, never went live, and was discarded on 2026-09-14 — kept below as
+historical record of the technique used, not as a description of the current or a pending icon.**
+See "Icon work paused" above for the full story.
 
 The original `make_icons.py` (Pillow) script was never checked into this repo and this machine has
 no Python (see "Known environment facts" in Original's plan.md — that fact was true only for the
