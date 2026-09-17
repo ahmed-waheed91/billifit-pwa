@@ -16,16 +16,18 @@ app and Original in the same pass — not "Original first, port later" as a sepa
 cosmetic changes (colors, icon, background art, name/branding) are BilliFit-only. See the Original's
 plan.md "Limited Edition App" section for the full naming convention.
 
-## Functional features (2026-08-28, 2026-09-04, 2026-09-11, and 2026-09-12)
+## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-14 — no feature currently in progress; everything listed below (including the
-2026-09-12 batch) is user-confirmed working on a real device. See Original's "Immediate next steps".
+_Last updated 2026-09-18 — no feature currently in progress; everything listed below (including the
+2026-09-18 batch) is user-confirmed working on a real device. See Original's "Immediate next steps".
 **2026-09-14: Original's icon was replaced with Ahmed's own artwork — this was explicitly scoped as
 Nourish-only/cosmetic and nothing in this repo changed because of it.** Same day, the stale
 never-committed 2026-08-28 icon regeneration sitting in this repo's working tree was discarded at the
 user's request ("we will come back fresh to that at a later stage") — working tree is now clean. See
 "Icon work paused" below for the full closure and for why the lessons from Original's session still
-matter whenever BilliFit's own icon work resumes._
+matter whenever BilliFit's own icon work resumes. **2026-09-18: three functional fixes/features
+(fiber:carbs ratio, an Add-food selection bug, a USDA lookup reliability overhaul) shipped in the
+same pass as Original — see "Session features and fixes (2026-09-18)" below.**_
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -162,6 +164,41 @@ same traps) exist here.
 - **Calories card now colored by status**: red when over, amber (`var(--warning)`, same color as the
   "Under" pill everywhere else in the app) when under, brand blue when in range — previously always
   brand blue regardless of status.
+
+## Session features and fixes (2026-09-18)
+
+Three pieces of work, logic-identical to Original, implemented here in the same pass per the
+corrected functional-changes-go-in-both-apps rule. Full detail, exact root causes, and the real
+USDA API verification (403/429 responses, real Foundation-vs-SR-Legacy nutrient data) live in
+**Original's `plan.md`, under "Fiber:carbs ratio, Add-food selection bug, and USDA lookup
+reliability overhaul (2026-09-18)"** — read that before touching any of this again.
+
+- **Per-meal fiber:carbs ratio**, shown in the Today → Meal breakdown accordion (both the mobile and
+  the separate desktop layout). User chose to trust the existing meal grouping as-is rather than add
+  per-item timestamps to enforce "eaten in one sitting" — noted as a possible future revisit, not
+  done now. Displays as a rounded `1:X` ratio (carbs per 1g fiber) plus a quality pill: ≤5 Perfect,
+  ≤10 Good, ≤15 Acceptable, >15 Bad (Perfect/Good both render with the app's "good" green, since the
+  app only has 3 status colors for 4 labels); a meal with carbs but zero fiber shows "No fiber"
+  rather than an undefined ratio.
+- **Add Food: selecting an item didn't enable the "Add" button until switching tabs.** Root cause:
+  `toggleSelected()` patches only the selected row's own DOM node (to preserve the live search
+  filter) and skips the full `render()` that would otherwise recompute the bottom "Add to X · N
+  items" button's text/disabled state — so the button stayed stale until something else forced a
+  full render. Fixed with a new `syncAddFoodBottomButton()`, called after every patched-row
+  selection and reused inside `patchAddFoodTargetMeal()` in place of its own duplicated version of
+  the same logic.
+- **USDA lookup reliability overhaul.** Started from a user-reported bug (raspberries showing 0g
+  fiber) root-caused to `fetchUsdaFood()` locking onto the first `dataType` tier with any matching
+  food, even when that tier's record omits nutrients entirely rather than reporting them as zero.
+  User then asked for a full audit before pushing ("any and all issues related to USDA need to be
+  fixed"), which found the same gap could affect any tracked nutrient, plus three more issues — all
+  fixed in one rewrite: nutrient-completeness scoring across all tiers (not just fiber) picks the
+  most complete match; a second, previously-unrecognized sugar nutrient id (`1063`, used by
+  Foundation-tier records) is now accepted alongside the original `2000`; each tier's top-3 search
+  results are checked for a description containing every query word (or its de-pluralized stem)
+  before trusting the API's own top-ranked pick; and 429 (rate limit) / 401/403 (bad key) responses
+  are now surfaced as distinct, actionable states instead of a generic "couldn't reach the internet"
+  message. Tiers are now fetched in parallel instead of sequentially.
 
 ## Live deployment
 
