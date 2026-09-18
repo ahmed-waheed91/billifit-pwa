@@ -18,16 +18,19 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-18 — no feature currently in progress; everything listed below (including the
-2026-09-18 batch) is user-confirmed working on a real device. See Original's "Immediate next steps".
-**2026-09-14: Original's icon was replaced with Ahmed's own artwork — this was explicitly scoped as
-Nourish-only/cosmetic and nothing in this repo changed because of it.** Same day, the stale
-never-committed 2026-08-28 icon regeneration sitting in this repo's working tree was discarded at the
-user's request ("we will come back fresh to that at a later stage") — working tree is now clean. See
-"Icon work paused" below for the full closure and for why the lessons from Original's session still
-matter whenever BilliFit's own icon work resumes. **2026-09-18: three functional fixes/features
-(fiber:carbs ratio, an Add-food selection bug, a USDA lookup reliability overhaul) shipped in the
-same pass as Original — see "Session features and fixes (2026-09-18)" below.**_
+_Last updated 2026-09-18 (second checkpoint same day) — no feature currently in progress; everything
+listed below (including both 2026-09-18 batches) is user-confirmed working on a real device. See
+Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
+artwork — this was explicitly scoped as Nourish-only/cosmetic and nothing in this repo changed because
+of it.** Same day, the stale never-committed 2026-08-28 icon regeneration sitting in this repo's
+working tree was discarded at the user's request ("we will come back fresh to that at a later stage")
+— working tree is now clean. See "Icon work paused" below for the full closure and for why the
+lessons from Original's session still matter whenever BilliFit's own icon work resumes. **2026-09-18
+(functional batch): three functional fixes/features (fiber:carbs ratio, an Add-food selection bug, a
+USDA lookup reliability overhaul) shipped in the same pass as Original — see "Session features and
+fixes (2026-09-18)" below. 2026-09-18 (visual batch): Original got a full Cobalt & Ice color/background
+overhaul — explicitly Nourish-only, nothing in this repo changed, see "Nourish visual refresh
+(2026-09-18) — explicitly NOT applied here" below.**_
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -199,6 +202,26 @@ reliability overhaul (2026-09-18)"** — read that before touching any of this a
   before trusting the API's own top-ranked pick; and 429 (rate limit) / 401/403 (bad key) responses
   are now surfaced as distinct, actionable states instead of a generic "couldn't reach the internet"
   message. Tiers are now fetched in parallel instead of sequentially.
+
+## Nourish visual refresh (2026-09-18) — explicitly NOT applied here
+
+Later the same day, Original got a full color/background overhaul: the palette changed from Forest &
+Fog to "Cobalt & Ice" (`#2657FF` brand), the "under range" status color changed from orange to a
+neutral slate, a decorative header avatar was removed, and three data-driven background motifs
+(Target Rings on Today/Log food, a Logging Streak grid on History/Memory, a Trend Line on
+Trends/Export) were added, tied to what each screen actually does rather than generic decoration.
+
+**None of this touched this repo, on purpose.** This was a purely visual/aesthetic request — the user
+was explicit about it mid-session ("like i have said before only functional things get applied to
+both and not visual") — so per the cosmetic-only-is-per-app rule at the top of this file, it stays
+Nourish-only. BilliFit keeps its own existing pastel blue + yellow palette (see "Re-themed to pastel
+blue + yellow" below) untouched. Full detail, the two comparison Artifacts' rejected options, and two
+real bugs found/fixed during live verification (background motifs invisible on a real phone; the
+Logging Streak grid reading far too dense at real page height) are in **Original's `plan.md`, under
+"Visual refresh: Cobalt & Ice palette and data-driven background motifs (2026-09-18)"** — read that
+if BilliFit is ever given its own equivalent background-motif treatment in the future, since the two
+implementation gotchas documented there (the `.phone` full-screen opaque-background trap, and pattern
+density reading much stronger at real scale than in a small preview) would apply here identically.
 
 ## Live deployment
 
