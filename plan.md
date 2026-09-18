@@ -18,8 +18,8 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-18 (second checkpoint same day) — no feature currently in progress; everything
-listed below (including both 2026-09-18 batches) is user-confirmed working on a real device. See
+_Last updated 2026-09-18 (third checkpoint same day) — no feature currently in progress; everything
+listed below (including all three 2026-09-18 batches) is user-confirmed working on a real device. See
 Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
 artwork — this was explicitly scoped as Nourish-only/cosmetic and nothing in this repo changed because
 of it.** Same day, the stale never-committed 2026-08-28 icon regeneration sitting in this repo's
@@ -30,7 +30,10 @@ lessons from Original's session still matter whenever BilliFit's own icon work r
 USDA lookup reliability overhaul) shipped in the same pass as Original — see "Session features and
 fixes (2026-09-18)" below. 2026-09-18 (visual batch): Original got a full Cobalt & Ice color/background
 overhaul — explicitly Nourish-only, nothing in this repo changed, see "Nourish visual refresh
-(2026-09-18) — explicitly NOT applied here" below.**_
+(2026-09-18) — explicitly NOT applied here" below. 2026-09-18 (third batch): Memory tab Archive/Delete
+(double-confirmed) plus reason tags feeding a real Weekly Review — both functional, shipped in the same
+pass as Original, see "Memory bulk actions and Weekly Review (2026-09-18, third checkpoint same day)"
+below.**_
 
 Four functional changes — memory-only export/import with duplicate resolution, cross-tab search in
 Add Food, delete-a-past-day in History, and removal of the Memory screen's "Notes" tab — were
@@ -222,6 +225,30 @@ Logging Streak grid reading far too dense at real page height) are in **Original
 if BilliFit is ever given its own equivalent background-motif treatment in the future, since the two
 implementation gotchas documented there (the `.phone` full-screen opaque-background trap, and pattern
 density reading much stronger at real scale than in a small preview) would apply here identically.
+
+## Memory bulk actions and Weekly Review (2026-09-18, third checkpoint same day) — both apps, functional
+
+Two more functional features, logic-identical to Original, implemented here in the same pass per the
+corrected rule. Full implementation detail, the data-model changes, and the local-preview-with-
+sample-data workflow used before pushing all live in **Original's `plan.md`, under "Memory bulk
+actions and Weekly Review (2026-09-18, third checkpoint same day)"** — read that before touching any
+of this again.
+
+- **Memory tab Select bar gets Archive and Delete, both double-confirmed**, alongside the existing
+  Share. `library` state gained `bulkAction:null`; a two-step confirm (preview, then commit) gates all
+  three actions. Wired into the Android-back-button overlay chain like every other confirm card.
+- **Reason tags on off-track History days, rolling up into a real Weekly Review.** Any History day
+  outside its calorie range gets a "What happened this day? (optional)" prompt (six preset chips or
+  free text); Week view's per-week cards now show calorie *and* protein hit-rate, a current streak,
+  a trend line, and an auto-written narrative that folds in the tag breakdown of the week's off-track
+  days.
+
+**Mid-session correction worth noting**: the Memory bulk-actions feature was initially built
+Nourish-only before this porting pass — a scope mistake, since it's functional, not visual, and the
+user caught it immediately after a run of visual-only work in the same session. Both features here
+are logic-identical to Original except for this repo's own pastel-blue-and-yellow color tokens
+(`--brand`, `--critical`, `--label-tint`/`--label-c`, etc.), which the new UI reads the same way
+everything else here already does — no new theming work was needed.
 
 ## Live deployment
 
