@@ -18,7 +18,10 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-20 (fourth checkpoint) — no feature currently in progress; everything
+_Last updated 2026-09-20 (fifth checkpoint: sodium range, Export preview pills/rows, Today macro
+popups with net carbs, Notes & accuracy box removed, Export tab renamed "Data" with a capped
+Recent-exports popup — see "Sodium range, Today/Export refinements, and the Data tab (2026-09-20, fifth
+checkpoint)" below; all shipped in the same pass as Original) — no feature currently in progress; everything
 listed below (including all three 2026-09-18 batches and the 2026-09-20 USDA-search move) is
 user-confirmed working on a real device; the 2026-09-20 Maintenance-calories feature was pushed last
 and is not yet confirmed on a phone. See
@@ -271,6 +274,24 @@ detail (function names, thresholds, test method, tooling note) lives in **Origin
   new UI reads BilliFit's own color tokens, no theming work needed. Not yet confirmed on a phone.
 - BilliFit's USDA results list was verified with `window.fetch` stubbed in the test browser only (the
   shared public demo key had hit its rate limit) — the file itself carries no stub or seed data.
+
+## Sodium range, Today/Export refinements, and the Data tab (2026-09-20, fifth checkpoint) — both apps, functional
+
+Five more functional changes, logic-identical to Original and shipped here in the same pass. Full
+detail (function names, migration rules, tooling notes) lives in **Original's `plan.md`, under "Sodium
+range, Today/Export refinements, and the Data tab (2026-09-20, fifth checkpoint)"** (items 31-35) —
+read that first. Nothing here needed BilliFit-specific handling; every anchor matched and the new UI
+reads BilliFit's own color tokens.
+
+- **Sodium is a range** (default 2,000–2,500 mg, amber when under) with a migration at both load sites
+  (`migrateSodiumTarget`; an untouched old 2,300 ceiling becomes the new default). Commit `d942ded`.
+- **Export day preview** shows UNDER / OK / OVER pills and 7 rows (added carbs, fat, sodium). `6328029`.
+- **Today macro tiles open a popup** with per-meal and per-item amounts; the Carbs popup adds net carbs
+  (carbs − fiber − sugar, floored at 0). `95433ef`.
+- **Removed the "Notes & accuracy" box** from Today. `edd0a77`.
+- **Export tab renamed "Data"** (new transfer icon, label in bottom bar/desktop strip/screen header;
+  internal id still `exportScreen`), **recent exports capped at 5** and moved into a "Recent (n)" popup
+  beside Export PDF. `dade8dc`.
 
 ## Live deployment
 
