@@ -18,8 +18,10 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-18 (third checkpoint same day) — no feature currently in progress; everything
-listed below (including all three 2026-09-18 batches) is user-confirmed working on a real device. See
+_Last updated 2026-09-20 (fourth checkpoint) — no feature currently in progress; everything
+listed below (including all three 2026-09-18 batches and the 2026-09-20 USDA-search move) is
+user-confirmed working on a real device; the 2026-09-20 Maintenance-calories feature was pushed last
+and is not yet confirmed on a phone. See
 Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
 artwork — this was explicitly scoped as Nourish-only/cosmetic and nothing in this repo changed because
 of it.** Same day, the stale never-committed 2026-08-28 icon regeneration sitting in this repo's
@@ -249,6 +251,26 @@ user caught it immediately after a run of visual-only work in the same session. 
 are logic-identical to Original except for this repo's own pastel-blue-and-yellow color tokens
 (`--brand`, `--critical`, `--label-tint`/`--label-c`, etc.), which the new UI reads the same way
 everything else here already does — no new theming work was needed.
+
+## USDA search moves to Memory, and Maintenance calories (2026-09-20) — both apps, functional
+
+Two more functional features, logic-identical to Original, shipped here in the same pass. Full
+detail (function names, thresholds, test method, tooling note) lives in **Original's `plan.md`, under
+"USDA search moves to Memory, and Maintenance calories (2026-09-20)"** (items 29-30) — read that first.
+
+- **USDA lookup left the Log screen.** Log's USDA tab keeps the saved list and a "Search USDA in
+  Memory →" shortcut; Memory → USDA now has a multi-result search (per-tier lists of up to 10,
+  Foundation / SR Legacy / Survey, **branded products behind an "Include branded products" toggle that
+  is off at every launch**), one-tap Save per result, and a "← Back to Log food" bar after using the
+  shortcut. `fetchUsdaFood`, Quick lookup and their helpers were deleted. Commit `97ffc65` (`origin/master`).
+- **Maintenance calories.** New Settings "Your profile" card (age, height, sex, activity — persisted
+  and in backups) and a collapsible Trends card with a Mifflin-St Jeor formula estimate plus a
+  measured estimate (intake vs. weight trend, needs ≥4 weigh-ins over ≥10 days with meals logged),
+  and an optional confirm-gated "use X–Y as my calorie target". Commit `6a02cca` (`origin/master`).
+  BilliFit-specific: the Trends anchor sits after this repo's `catBg('trends')` cat background; the
+  new UI reads BilliFit's own color tokens, no theming work needed. Not yet confirmed on a phone.
+- BilliFit's USDA results list was verified with `window.fetch` stubbed in the test browser only (the
+  shared public demo key had hit its rate limit) — the file itself carries no stub or seed data.
 
 ## Live deployment
 
