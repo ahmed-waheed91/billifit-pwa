@@ -18,15 +18,20 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-23 (sixth checkpoint: Log food no longer defaults to Snack, Trends
+_Last updated 2026-09-23 (seventh checkpoint: a per-item checkbox excludes whole fruit/veg sugar from
+the daily sugar ceiling check everywhere it's evaluated, while every displayed gram figure stays the
+true total; plus a same-day fix so the Sugar tile's own breakdown modal explains the exclusion
+instead of contradicting the tile — see "Sugar limit: whole-fruit/vegetable exemption (2026-09-23,
+seventh checkpoint)" below; all shipped in the same pass as Original, **confirmed working on a real
+phone**). Prior checkpoint: sixth (Log food no longer defaults to Snack, Trends
 category-chip scroll position preserved, "set as usual" amounts for Saved Foods/Ingredients/USDA,
 and a four-part maintenance-calorie accuracy overhaul (trend-weight smoothing, recency-weighted +
 outlier-trimmed intake average, an honest range, an adaptive lookback window, a self-calibrating
 formula fallback) plus an accuracy-tips popup — see "Meal-logging fixes and a maintenance-calorie
-accuracy overhaul (2026-09-23, sixth checkpoint)" below; all shipped in the same pass as Original) —
+accuracy overhaul (2026-09-23, sixth checkpoint)" below) —
 no feature currently in progress; everything through the fifth checkpoint (2026-09-20) is
 user-confirmed working on a real device; the sixth checkpoint's items are pushed and verified in the
-local preview, not yet confirmed on a phone. See Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
+local preview, not yet explicitly confirmed on a phone. See Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
 artwork — this was explicitly scoped as Nourish-only/cosmetic and nothing in this repo changed because
 of it.** Same day, the stale never-committed 2026-08-28 icon regeneration sitting in this repo's
 working tree was discarded at the user's request ("we will come back fresh to that at a later stage")
@@ -323,6 +328,28 @@ every anchor matched and the new UI reads BilliFit's own color tokens.
 - **Info button + accuracy-tips popup** on the maintenance-calorie card (six tips: consistent
   weigh-in timing, daily weigh-ins, consistent logging, give it a few weeks, keep the profile
   current, a wide/moving range is normal early on). `b56ac8d`.
+
+## Sugar limit: whole-fruit/vegetable exemption (2026-09-23, seventh checkpoint) — both apps, functional
+
+Logic-identical to Original, shipped here in the same pass. Full detail (function names, field
+names, migration notes) lives in **Original's `plan.md`, under "Sugar limit: whole-fruit/vegetable
+exemption (2026-09-23, seventh checkpoint)"** (items 44-45) — read that first. Nothing here needed
+BilliFit-specific handling; every anchor matched and the new checkbox/modal text reads BilliFit's
+own theme tokens automatically.
+
+- **Whole-fruit/vegetable checkbox** on the shared Saved Foods/Ingredients/USDA edit form
+  (`item.wholeProduce`) excludes that item's sugar from the daily ceiling check only — the displayed
+  gram figure, net carbs, and calories/carbs stay on the true total everywhere. A second total,
+  `sugarCounted`, drives every status/ceiling evaluation (Today tile, History dot, Trends band/line,
+  PDF/Data export, desktop dashboard) instead. Built-in whole-produce items (Apple, Banana, Grapes,
+  Orange, Strawberries, Watermelon, Tomato, Potato, Broccoli, Spinach, Cucumber, Carrot) ship
+  pre-checked, with a backfill for anyone who already had them saved. `9b19ef3`'s Original commit
+  pairs with BilliFit's `4805211`.
+- **Sugar breakdown modal fix** — the tap-in "Where it came from" modal had its own independent
+  status check still using the raw total, so it could contradict the tile ("In range" tile, "Over"
+  modal). Fixed to match, plus added a breakdown line (total − excluded = counted) and a "grams left
+  before your limit" line, with each whole-fruit/veg item tagged inline. **User confirmed working on
+  a real phone.** `7edae27`.
 
 ## Live deployment
 
