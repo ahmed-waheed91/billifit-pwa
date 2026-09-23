@@ -18,14 +18,15 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-20 (fifth checkpoint: sodium range, Export preview pills/rows, Today macro
-popups with net carbs, Notes & accuracy box removed, Export tab renamed "Data" with a capped
-Recent-exports popup — see "Sodium range, Today/Export refinements, and the Data tab (2026-09-20, fifth
-checkpoint)" below; all shipped in the same pass as Original) — no feature currently in progress; everything
-listed below (including all three 2026-09-18 batches and the 2026-09-20 USDA-search move) is
-user-confirmed working on a real device; the 2026-09-20 Maintenance-calories feature was pushed last
-and is not yet confirmed on a phone. See
-Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
+_Last updated 2026-09-23 (sixth checkpoint: Log food no longer defaults to Snack, Trends
+category-chip scroll position preserved, "set as usual" amounts for Saved Foods/Ingredients/USDA,
+and a four-part maintenance-calorie accuracy overhaul (trend-weight smoothing, recency-weighted +
+outlier-trimmed intake average, an honest range, an adaptive lookback window, a self-calibrating
+formula fallback) plus an accuracy-tips popup — see "Meal-logging fixes and a maintenance-calorie
+accuracy overhaul (2026-09-23, sixth checkpoint)" below; all shipped in the same pass as Original) —
+no feature currently in progress; everything through the fifth checkpoint (2026-09-20) is
+user-confirmed working on a real device; the sixth checkpoint's items are pushed and verified in the
+local preview, not yet confirmed on a phone. See Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
 artwork — this was explicitly scoped as Nourish-only/cosmetic and nothing in this repo changed because
 of it.** Same day, the stale never-committed 2026-08-28 icon regeneration sitting in this repo's
 working tree was discarded at the user's request ("we will come back fresh to that at a later stage")
@@ -292,6 +293,36 @@ reads BilliFit's own color tokens.
 - **Export tab renamed "Data"** (new transfer icon, label in bottom bar/desktop strip/screen header;
   internal id still `exportScreen`), **recent exports capped at 5** and moved into a "Recent (n)" popup
   beside Export PDF. `dade8dc`.
+
+## Meal-logging fixes and a maintenance-calorie accuracy overhaul (2026-09-23, sixth checkpoint) — both apps, functional
+
+Eight more functional changes, logic-identical to Original and shipped here in the same pass. Full
+detail (function names, constants, state fields, migration notes) lives in **Original's `plan.md`,
+under "Meal-logging fixes and a maintenance-calorie accuracy overhaul (2026-09-23, sixth
+checkpoint)"** (items 36-43) — read that first. Nothing here needed BilliFit-specific handling;
+every anchor matched and the new UI reads BilliFit's own color tokens.
+
+- **Log food no longer defaults to "Snack"** — `targetMeal` starts `null`, every add action (bottom
+  button + the three per-row instant-add buttons) is gated on a meal being picked first. `4afe3fa`.
+- **Trends category-chip scroll position preserved** within the tab, resets when you leave and
+  come back — extended the existing scroll-preservation mechanism to also track `scrollLeft`.
+  `6a26ce5`.
+- **"Set as usual" amount** when logging Saved Foods (`defaultPct`), Ingredients/USDA
+  (`defaultAmount`) — an opt-in checkbox next to the portion/weight controls saves whatever amount
+  was used as that item's new default. `04d583e`.
+- **Maintenance-calorie accuracy overhaul**, four parts to `measuredMaintenance()`: weight-trend
+  smoothing + recency-weighted/outlier-trimmed intake average (`ca26176`), fixed to smooth across
+  the user's *entire* weigh-in history instead of resetting every lookback window (`4491a83`), an
+  honest ± range instead of one number plus an adaptive 14-56 day lookback window sized to how
+  clean the raw weigh-ins are (`843afdc`), and a self-calibrating formula-estimate fallback that
+  learns a personal correction from the gap between formula and measured over time (`d20eb62`).
+  Body-fat % (a two-compartment fat/lean model) was investigated as a further improvement using the
+  user's own BIA scale data but **not implemented** — the fat-mass trend looked like a dehydration
+  artifact rather than real signal; tracked in memory (`project_bodyfat_feasibility_tracking.md`,
+  not in either repo) for re-analysis as more weeks of data come in.
+- **Info button + accuracy-tips popup** on the maintenance-calorie card (six tips: consistent
+  weigh-in timing, daily weigh-ins, consistent logging, give it a few weeks, keep the profile
+  current, a wide/moving range is normal early on). `b56ac8d`.
 
 ## Live deployment
 
