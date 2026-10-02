@@ -18,7 +18,10 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-10-02 (eighth checkpoint: composed Saved Foods log as one expandable dish row, the
+_Last updated 2026-10-03 (ninth checkpoint: label-photo OCR and its 22 MB Tesseract library were
+removed and replaced by barcode scanning in the Memory tab — see "Barcode scanning replaces label
+OCR (2026-10-03, ninth checkpoint)" below; shipped in the same pass as Original, **phone-confirmed
+working**). Earlier checkpoint, eighth, 2026-10-02 (composed Saved Foods log as one expandable dish row, the
 Settings profile autosaves with a backup copy and can't be blanked by invalid input, Memory/Log-food
 search matches words in any order, and an "All / This tab only" search toggle — see "Dish rows,
 profile persistence, and search (2026-10-02, eighth checkpoint)" below; all shipped in the same pass as
@@ -383,6 +386,20 @@ profile backup under `billifit_profile_backup_v1`, and the stale-copy version st
   "Last backup" line on the Data tab; a per-save version stamp with `refreshIfStale()` on
   resume (visibilitychange/pageshow/focus) so a backgrounded copy adopts newer stored data instead of
   overwriting it. Full rationale in Original's items 51-52. `7545d31`. Not yet phone-tested.
+
+## Barcode scanning replaces label OCR (2026-10-03, ninth checkpoint) — both apps, functional
+
+Logic-identical to Original, shipped here in the same pass. Full detail (UAE-database research,
+function names, flow, rationale) lives in **Original's `plan.md`, under "Barcode scanning replaces
+label OCR (2026-10-03, ninth checkpoint)"** (item 53) — read that first. BilliFit-specific bits only:
+- `vendor/tesseract/` (22 MB) `git rm`'d here too; `vendor/` now holds just the two jsPDF files.
+  Don't reintroduce OCR.
+- `service-worker.js`: `openfoodfacts.org` added to the network-only bypass (alongside
+  `api.nal.usda.gov`) and `CACHE_NAME` bumped `billifit-v2` → `billifit-v3`.
+- New "Scan" button in the Memory header → full-screen scanner (Chrome BarcodeDetector, typed
+  fallback) → Memory match / Open Food Facts lookup → ask Saved foods / Ingredients / USDA each time
+  → the existing add form opens prefilled with the barcode. Items gain an optional `barcode` field.
+- Phone-confirmed that scanning works; broader real-product testing to come. Commit: `c07bc4a`.
 
 ## Live deployment
 
