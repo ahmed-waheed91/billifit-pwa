@@ -18,7 +18,11 @@ plan.md "Limited Edition App" section for the full naming convention.
 
 ## Functional features (2026-08-28, 2026-09-04, 2026-09-11, 2026-09-12, and 2026-09-18)
 
-_Last updated 2026-09-23 (seventh checkpoint: a per-item checkbox excludes whole fruit/veg sugar from
+_Last updated 2026-10-02 (eighth checkpoint: composed Saved Foods log as one expandable dish row, the
+Settings profile autosaves with a backup copy and can't be blanked by invalid input, Memory/Log-food
+search matches words in any order, and an "All / This tab only" search toggle — see "Dish rows,
+profile persistence, and search (2026-10-02, eighth checkpoint)" below; all shipped in the same pass as
+Original, **not yet confirmed on a real phone**). Earlier checkpoint, seventh (2026-09-23: a per-item checkbox excludes whole fruit/veg sugar from
 the daily sugar ceiling check everywhere it's evaluated, while every displayed gram figure stays the
 true total; plus a same-day fix so the Sugar tile's own breakdown modal explains the exclusion
 instead of contradicting the tile — see "Sugar limit: whole-fruit/vegetable exemption (2026-09-23,
@@ -350,6 +354,24 @@ own theme tokens automatically.
   modal). Fixed to match, plus added a breakdown line (total − excluded = counted) and a "grams left
   before your limit" line, with each whole-fruit/veg item tagged inline. **User confirmed working on
   a real phone.** `7edae27`.
+
+## Dish rows, profile persistence, and search (2026-10-02, eighth checkpoint) — both apps, functional
+
+Logic-identical to Original, shipped here in the same pass. Full detail (function names, field
+names, rationale, the unproven profile root cause) lives in **Original's `plan.md`, under "Dish rows,
+profile persistence, and search (2026-10-02, eighth checkpoint)"** (items 46-49) — read that first.
+Nothing needed BilliFit-specific handling except the storage keys (`billifit_backup_v1`, with the
+profile backup under `billifit_profile_backup_v1`). **Not yet confirmed on a real phone.**
+- **Dish rows (46):** `addComposedFoodToMeal` logs one row with a frozen `components` snapshot and
+  its own `sugarCounted` (so the whole-fruit sugar exemption still works for mixed dishes);
+  tap-to-expand on Today and desktop, indented lines in the sugar/stat modal, grey sub-rows in the
+  PDF. Old logged days stay as separate ingredient rows. `f421864`.
+- **Profile (47):** autosave on field change, blank/invalid never overwrites a saved value (Save shows
+  a hint), separate backup key restored at boot if the main blob loses the profile,
+  `navigator.storage.persist()` requested. `f421864` (same commit as 46).
+- **Search (48-49):** global `nameMatches()` for any-order/partial-word/punctuation-insensitive
+  matching, plus the "Search in: All | This tab only" toggle in Memory and Log food (state not
+  persisted, resets to All on screen open). `76b6620`.
 
 ## Live deployment
 
