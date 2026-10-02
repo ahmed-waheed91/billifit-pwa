@@ -1,4 +1,4 @@
-const CACHE_NAME = 'billifit-v2';
+const CACHE_NAME = 'billifit-v3';
 const PRECACHE = [
   './',
   './index.html',
@@ -30,8 +30,8 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
 
-  if (req.url.includes('api.nal.usda.gov')) {
-    // live USDA lookups: always hit the network, never cache/serve stale nutrition data
+  if (req.url.includes('api.nal.usda.gov') || req.url.includes('openfoodfacts.org')) {
+    // live USDA / Open Food Facts lookups: always hit the network, never cache/serve stale nutrition data
     event.respondWith(fetch(req));
     return;
   }
