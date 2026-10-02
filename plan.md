@@ -22,7 +22,9 @@ _Last updated 2026-10-02 (eighth checkpoint: composed Saved Foods log as one exp
 Settings profile autosaves with a backup copy and can't be blanked by invalid input, Memory/Log-food
 search matches words in any order, and an "All / This tab only" search toggle — see "Dish rows,
 profile persistence, and search (2026-10-02, eighth checkpoint)" below; all shipped in the same pass as
-Original, **not yet confirmed on a real phone**). Earlier checkpoint, seventh (2026-09-23: a per-item checkbox excludes whole fruit/veg sugar from
+Original, **confirmed working on a real phone**; same-day follow-ups: the Saved Food arrow now opens
+in place (phone-confirmed), plus a backup reminder and a stale-copy guard — pushed, **not yet
+phone-tested**). Earlier checkpoint, seventh (2026-09-23: a per-item checkbox excludes whole fruit/veg sugar from
 the daily sugar ceiling check everywhere it's evaluated, while every displayed gram figure stays the
 true total; plus a same-day fix so the Sugar tile's own breakdown modal explains the exclusion
 instead of contradicting the tile — see "Sugar limit: whole-fruit/vegetable exemption (2026-09-23,
@@ -33,9 +35,9 @@ and a four-part maintenance-calorie accuracy overhaul (trend-weight smoothing, r
 outlier-trimmed intake average, an honest range, an adaptive lookback window, a self-calibrating
 formula fallback) plus an accuracy-tips popup — see "Meal-logging fixes and a maintenance-calorie
 accuracy overhaul (2026-09-23, sixth checkpoint)" below) —
-no feature currently in progress; everything through the fifth checkpoint (2026-09-20) is
-user-confirmed working on a real device; the sixth checkpoint's items are pushed and verified in the
-local preview, not yet explicitly confirmed on a phone. See Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
+no feature currently in progress; everything through the eighth checkpoint (including the sixth
+checkpoint's items, confirmed 2026-10-02) is user-confirmed working on a real device; only the backup
+reminder + stale-copy guard (2026-10-02) are not yet phone-tested. See Original's "Immediate next steps". **2026-09-14: Original's icon was replaced with Ahmed's own
 artwork — this was explicitly scoped as Nourish-only/cosmetic and nothing in this repo changed because
 of it.** Same day, the stale never-committed 2026-08-28 icon regeneration sitting in this repo's
 working tree was discarded at the user's request ("we will come back fresh to that at a later stage")
@@ -361,7 +363,8 @@ Logic-identical to Original, shipped here in the same pass. Full detail (functio
 names, rationale, the unproven profile root cause) lives in **Original's `plan.md`, under "Dish rows,
 profile persistence, and search (2026-10-02, eighth checkpoint)"** (items 46-49) — read that first.
 Nothing needed BilliFit-specific handling except the storage keys (`billifit_backup_v1`, with the
-profile backup under `billifit_profile_backup_v1`). **Not yet confirmed on a real phone.**
+profile backup under `billifit_profile_backup_v1`, and the stale-copy version stamp under
+`billifit_save_stamp_v1`). **Items 46-50 confirmed on a real phone; 51-52 pushed, not yet phone-tested.**
 - **Dish rows (46):** `addComposedFoodToMeal` logs one row with a frozen `components` snapshot and
   its own `sugarCounted` (so the whole-fruit sugar exemption still works for mixed dishes);
   tap-to-expand on Today and desktop, indented lines in the sugar/stat modal, grey sub-rows in the
@@ -372,6 +375,14 @@ profile backup under `billifit_profile_backup_v1`). **Not yet confirmed on a rea
 - **Search (48-49):** global `nameMatches()` for any-order/partial-word/punctuation-insensitive
   matching, plus the "Search in: All | This tab only" toggle in Memory and Log food (state not
   persisted, resets to All on screen open). `76b6620`.
+- **Arrow in place (50):** `toggleLibraryOpen` patches the Saved Food row (and the previously open
+  one) instead of a full re-render, so the search text, order and scroll survive; patched rows also
+  respect tab-only mode for source tags. Phone-confirmed. `675107f`.
+- **Backup reminder + stale-copy guard (51-52):** `lastBackupAt`/`backupSnoozeUntil` state,
+  `backupStatus()`, a Today "Back up your data" banner (Back up now / Later, 7-day threshold) and a
+  "Last backup" line on the Data tab; a per-save version stamp with `refreshIfStale()` on
+  resume (visibilitychange/pageshow/focus) so a backgrounded copy adopts newer stored data instead of
+  overwriting it. Full rationale in Original's items 51-52. `7545d31`. Not yet phone-tested.
 
 ## Live deployment
 
