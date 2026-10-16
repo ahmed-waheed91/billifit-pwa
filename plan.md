@@ -401,6 +401,20 @@ label OCR (2026-10-03, ninth checkpoint)"** (item 53) — read that first. Billi
   → the existing add form opens prefilled with the barcode. Items gain an optional `barcode` field.
 - Phone-confirmed that scanning works; broader real-product testing to come. Commit: `c07bc4a`.
 
+## Shared status rules, Self-check page, and Memory sort (2026-10-16, tenth checkpoint) — both apps, functional
+
+Logic-identical to Original, shipped here in the same pass. Full detail (function names, the 75 checks,
+rationale, tooling notes) lives in **Original's `plan.md`, under "Shared status rules, Self-check page, and
+Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. BilliFit-specific bits only:
+- `statusValueFor` / `itemSugarCounted` / `pillClassFor` replace the repeated sugar/water status logic;
+  water above 3 L now reads "Over" (was wrongly "Under").
+- Settings -> **Self-check** page (also `index.html#selftest`), 75 checks on sample data; never touches
+  real data. Uses `LOCAL_STORAGE_KEY` (`billifit_backup_v1`) rather than a literal, so it is storage-key safe.
+- Backup reminder after **3 days**, "Later" snoozes **1 day** (`BACKUP_OVERDUE_DAYS`, `BACKUP_SNOOZE_DAYS`).
+- Barcode lookups retry the leading-zero form (`barcodeVariants`); Memory / Log food sort row
+  ("A-Z | Newest first", `state.memorySort`, default A-Z).
+- `service-worker.js` `CACHE_NAME` is now `billifit-v5`. Commits: `15dc736` (54-55) and `7a53078` (56-59).
+- Self-check and backup reminder are phone-confirmed in Original; the rest awaits phone feedback.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
