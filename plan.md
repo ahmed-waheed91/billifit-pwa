@@ -415,6 +415,14 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   ("A-Z | Newest first", `state.memorySort`, default A-Z).
 - `service-worker.js` `CACHE_NAME` is now `billifit-v5`. Commits: `15dc736` (54-55) and `7a53078` (56-59).
 - Self-check and backup reminder are phone-confirmed in Original; the rest awaits phone feedback.
+
+### Follow-up, 2026-10-18 (items 60-61 in Original's plan.md) -- commit `c58d0b0`, `CACHE_NAME` `billifit-v6`
+- **History day view** now shows **Carbs / Protein / Fat / Calories** on both the 4 dots and the opened
+  tiles (no sugar, no fiber) -- same functional change as Original; Self-check is now **79 checks**.
+- **BilliFit-only (branding fix):** exported file names were still `nourish-daily-...pdf`,
+  `nourish-weekly-...pdf`, `nourish-backup-...json`; they are now `billifit-daily-`, `billifit-weekly-`,
+  `billifit-backup-`. PDF contents never named the app. If a similar leftover shows up, grep template
+  strings (file names), not just visible labels.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
