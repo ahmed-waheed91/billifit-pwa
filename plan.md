@@ -423,6 +423,13 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   `nourish-weekly-...pdf`, `nourish-backup-...json`; they are now `billifit-daily-`, `billifit-weekly-`,
   `billifit-backup-`. PDF contents never named the app. If a similar leftover shows up, grep template
   strings (file names), not just visible labels.
+- **Phone-confirmed 2026-10-23:** the user reported everything awaiting feedback (items 56-61, including
+  the `billifit-` file names) works well.
+- **Item 62, 2026-10-23 (commit `61a04d3`, `CACHE_NAME` `billifit-v7`)** -- same functional fix as
+  Original: the green "Added ✓" flash after logging an ingredient/USDA food used to end with a full
+  `render()` 1.4 s later, which rebuilt the search box (lost focus, keyboard closed). New
+  `App.clearAddFlash(kind, id)` patches only that row's button. Self-check now **83 checks** (new group
+  "Log food flash"). Awaiting phone feedback.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
