@@ -430,6 +430,11 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   `render()` 1.4 s later, which rebuilt the search box (lost focus, keyboard closed). New
   `App.clearAddFlash(kind, id)` patches only that row's button. Self-check now **83 checks** (new group
   "Log food flash"). Awaiting phone feedback.
+- **Item 63, 2026-10-24 (commit `8b40555`, `CACHE_NAME` `billifit-v8`)** -- same functional feature as
+  Original: Data tab -> **View full day** opens a past day in the Today layout (shared `renderDayScreen`,
+  "Past day" strip with day arrows, tinted page, editable behind a once-per-day "Editing a past day"
+  warning, back button unwinds one level at a time). Full design notes in Original's `plan.md` item 63.
+  Self-check now **92 checks** (new group "Past day view"). Awaiting phone feedback.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
