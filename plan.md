@@ -441,6 +441,10 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   Self-check moved to `selftest.js` (loaded on demand, precached), repeated inline styles shared --
   `index.html` ~334 KB; (66, `024a5f9`, `billifit-v11`) Self-check no longer fails when Log food was left
   on the Quick tab. Self-check **94 checks**. Awaiting phone feedback.
+- **Item 67, 2026-10-25** (`37b99b9`, `billifit-v12`) -- same as Original item 67: the Ingredients / USDA
+  form has "Label values are per [100] g/ml"; per-serving label numbers are converted to per 100 on save,
+  the serving is remembered and the label's numbers shown again on edit. Self-check **102 checks**.
+  Awaiting phone feedback. `index.html` ~338 KB.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
