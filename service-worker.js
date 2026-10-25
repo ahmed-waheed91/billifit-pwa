@@ -1,4 +1,4 @@
-const CACHE_NAME = 'billifit-v10';
+const CACHE_NAME = 'billifit-v11';
 const PRECACHE = [
   './',
   './index.html',
