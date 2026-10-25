@@ -435,6 +435,12 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   "Past day" strip with day arrows, tinted page, editable behind a once-per-day "Editing a past day"
   warning, back button unwinds one level at a time). Full design notes in Original's `plan.md` item 63.
   Self-check now **92 checks** (new group "Past day view"). Awaiting phone feedback.
+- **Items 64-66, 2026-10-25** -- same functional changes as Original (details in Original's `plan.md`):
+  (64, `e33f89e`, `billifit-v9`) water card's three quick buttons are user-set and an **Other** panel adds
+  or removes a typed ml amount; (65, `c85fd1c`, `billifit-v10`) tidy-up: desktop dashboard removed,
+  Self-check moved to `selftest.js` (loaded on demand, precached), repeated inline styles shared --
+  `index.html` ~334 KB; (66, `024a5f9`, `billifit-v11`) Self-check no longer fails when Log food was left
+  on the Quick tab. Self-check **94 checks**. Awaiting phone feedback.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
