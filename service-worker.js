@@ -1,7 +1,8 @@
-const CACHE_NAME = 'billifit-v9';
+const CACHE_NAME = 'billifit-v10';
 const PRECACHE = [
   './',
   './index.html',
+  './selftest.js',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
