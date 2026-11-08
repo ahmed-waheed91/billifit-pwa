@@ -445,6 +445,11 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   form has "Label values are per [100] g/ml"; per-serving label numbers are converted to per 100 on save,
   the serving is remembered and the label's numbers shown again on edit. Self-check **102 checks**.
   Awaiting phone feedback. `index.html` ~338 KB.
+- **Item 68, 2026-11-08** (`e5fb694`, `billifit-v13`) -- same as Original item 68: a Saved food can be an
+  ingredient inside another Saved food as a live link (edit the inner food and every food using it
+  updates; loops refused; a deleted inner food keeps its last numbers). Also fixed the recipe picker's
+  search breaking row layout. Self-check **111 checks**. `index.html` ~341 KB.
+- **2026-11-08: items 62-68 all confirmed working on the phone.** Nothing awaits feedback.
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
