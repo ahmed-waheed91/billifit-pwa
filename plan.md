@@ -450,6 +450,9 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
   updates; loops refused; a deleted inner food keeps its last numbers). Also fixed the recipe picker's
   search breaking row layout. Self-check **111 checks**. `index.html` ~341 KB.
 - **2026-11-08: items 62-68 all confirmed working on the phone.** Nothing awaits feedback.
+- **Item 69, 2026-11-10** (`2511579`, `billifit-v14`) -- same as Original item 69: shared memory items
+  are one-line compact text (no ids / auto recipe line), so long recipe foods survive WhatsApp; a
+  cut-off paste says so. Self-check **116 checks**. `index.html` ~343 KB. **Phone-confirmed 2026-11-10.**
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
