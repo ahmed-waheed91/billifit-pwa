@@ -453,6 +453,10 @@ Memory sort (2026-10-16, tenth checkpoint)"** (items 54-59) -- read that first. 
 - **Item 69, 2026-11-10** (`2511579`, `billifit-v14`) -- same as Original item 69: shared memory items
   are one-line compact text (no ids / auto recipe line), so long recipe foods survive WhatsApp; a
   cut-off paste says so. Self-check **116 checks**. `index.html` ~343 KB. **Phone-confirmed 2026-11-10.**
+- **Item 70, 2026-11-14** (`6ba7666`, `billifit-v15`) -- same as Original item 70: Body measurements
+  logbook (Today card with 2 pinned metrics, Body screen, per-metric history with edit/delete; in backups;
+  not used in targets). BilliFit has no background motifs, so that one patch block was skipped.
+  Self-check **127 checks**. `index.html` ~369 KB. **Pushed, awaiting phone feedback.**
 ## Live deployment
 
 - **Live URL (install via "Add to Home Screen"):** `https://ahmed-waheed91.github.io/billifit-pwa/`
